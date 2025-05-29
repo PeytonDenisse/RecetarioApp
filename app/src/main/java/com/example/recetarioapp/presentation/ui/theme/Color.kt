@@ -1,4 +1,4 @@
-package com.example.recetarioapp.ui.theme
+package com.example.recetarioapp.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

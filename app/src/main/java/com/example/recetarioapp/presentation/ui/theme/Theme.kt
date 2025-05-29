@@ -1,4 +1,4 @@
-package com.example.recetarioapp.ui.theme
+package com.example.recetarioapp.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
