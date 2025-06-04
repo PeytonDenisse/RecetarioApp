@@ -23,7 +23,7 @@ import com.example.recetarioapp.R
 
 @Composable
 fun Header() {
-    val img = painterResource(id = R.drawable.header1)
+    val img = painterResource(id = R.drawable.header2)
 
     Box(
         modifier = Modifier
@@ -57,13 +57,13 @@ fun Header() {
                 Icon(
                     imageVector = Icons.Default.Menu,
                     contentDescription = "Menú",
-                    tint = Color.Black
+                    tint = Color.White
                 )
 
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = "Usuario",
-                    tint = Color.DarkGray,
+                    tint = Color.White,
                     modifier = Modifier
                         .size(36.dp)
                         .clip(CircleShape)
@@ -75,12 +75,12 @@ fun Header() {
             Text(
                 text = "Good Afternoon",
                 style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
-                color = Color.Black
+                color = Color.White
             )
             Text(
                 text = "It’s time for afternoon tea.",
                 style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray
+                color = Color.White
             )
         }
     }
