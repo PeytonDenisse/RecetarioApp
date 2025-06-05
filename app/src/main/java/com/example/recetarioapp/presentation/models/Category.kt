@@ -1,4 +1,8 @@
 package com.example.recetarioapp.presentation.models
 
-class Category {
-}
+import android.media.Image
+
+data class FoodCategory(
+    val name: String,
+    val icon: Image
+)
