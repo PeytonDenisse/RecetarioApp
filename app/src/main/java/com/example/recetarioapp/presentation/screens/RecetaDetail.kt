@@ -17,6 +17,7 @@ fun RecetaDetail(innerPadding: PaddingValues) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Text(text = "Home", color = Color.White)
+        Text(text = "Detalle", color = Color.White)
+
     }
 }
