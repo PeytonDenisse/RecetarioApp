@@ -7,13 +7,13 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("usuarios")
+    @GET("users")
     suspend fun getUsuarios(): List<Usuarios>
 
-    @GET("recetas")
+    @GET("recipes")
     suspend fun getRecetas(): List<Recetas>
 
-    @GET("categorias")
+    @GET("categories")
     suspend fun getCategorias(): List<Categorias>
 
 }
