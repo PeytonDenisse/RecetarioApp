@@ -16,11 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import androidx.compose.ui.layout.ContentScale
+import com.example.recetarioapp.presentation.models.Category
 
-data class Category(
-    val name: String,
-    val imageUrl: String
-)
 
 @Composable
 fun CategoryCard(
