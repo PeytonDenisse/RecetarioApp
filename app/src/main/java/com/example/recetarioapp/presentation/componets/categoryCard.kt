@@ -14,14 +14,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+
 import androidx.compose.ui.layout.ContentScale
-import com.example.recetarioapp.presentation.models.Category
+import coil3.compose.AsyncImage
+import com.example.recetarioapp.presentation.models.cat
 
 
 @Composable
 fun CategoryCard(
-    category: Category,
+    category: cat,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
@@ -67,7 +68,7 @@ fun PreviewCategoryCard() {
     var isSelected by remember { mutableStateOf(true) }
 
     CategoryCard(
-        category = Category(
+        category = cat(
             name = "Popular",
             imageUrl = "https://cdn-icons-png.flaticon.com/512/3703/3703377.png"
         ),
