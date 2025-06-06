@@ -2,11 +2,15 @@ package com.example.recetarioapp.presentation.screens
 
 import Header
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +30,8 @@ import com.example.recetarioapp.presentation.componets.CategoryCard
 import com.example.recetarioapp.presentation.models.CategoriyList
 import com.example.recetarioapp.presentation.models.Category
 import com.example.recetarioapp.presentation.componets.CategoryCard // ✅ correcta
+import com.example.recetarioapp.presentation.componets.RecetaCard
+import com.example.recetarioapp.presentation.models.sampleRecipes
 
 @Composable
 fun HomeScreen() {
@@ -47,6 +53,7 @@ fun HomeScreen() {
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
+                // Categorías
                 Text(
                     text = "Categorías",
                     style = MaterialTheme.typography.titleMedium,
@@ -60,6 +67,25 @@ fun HomeScreen() {
                             isSelected = selectedCategory == category.name,
                             onClick = { selectedCategory = category.name }
                         )
+                    }
+                }
+
+                // Recetas populares
+                Text(
+                    text = "Recetas Populares",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.DarkGray,
+                    modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
+                )
+
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    items(sampleRecipes) { recipe ->
+                        RecetaCard(recipe = recipe)
                     }
                 }
             }
