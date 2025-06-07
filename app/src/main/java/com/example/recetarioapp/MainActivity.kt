@@ -104,7 +104,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable("home") {
-                            HomeScreen()
+                            HomeScreen(innerPadding = innerPadding, navController = navController)
                         }
 
                         composable("favorites") {
