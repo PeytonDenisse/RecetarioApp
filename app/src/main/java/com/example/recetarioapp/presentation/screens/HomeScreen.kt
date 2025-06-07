@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -26,15 +27,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.recetarioapp.presentation.componets.CategoryCard
 import com.example.recetarioapp.presentation.models.CategoriyList
-import com.example.recetarioapp.presentation.models.Category
-import com.example.recetarioapp.presentation.componets.CategoryCard // ✅ correcta
 import com.example.recetarioapp.presentation.componets.RecetaCard
 import com.example.recetarioapp.presentation.models.sampleRecipes
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(innerPadding: PaddingValues, navController: NavHostController
+) {
     var selectedCategory by remember { mutableStateOf<String?>(null) }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -51,8 +53,10 @@ fun HomeScreen() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
-            ) {
+                    .padding(innerPadding) // Respetar el espacio del Scaffold
+                    .background(Color.White)
+                    .padding(horizontal = 16.dp) // Espacio lateral como en HabitsScreen
+            )  {
                 // Categorías
                 Text(
                     text = "Categorías",
@@ -97,5 +101,5 @@ fun HomeScreen() {
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(innerPadding = PaddingValues(0.dp), navController = rememberNavController())
 }
