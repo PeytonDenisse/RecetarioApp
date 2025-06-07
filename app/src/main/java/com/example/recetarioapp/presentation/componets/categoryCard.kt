@@ -14,8 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+
 import androidx.compose.ui.layout.ContentScale
+import coil3.compose.AsyncImage
 import com.example.recetarioapp.presentation.models.Category
 
 
