@@ -20,11 +20,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
+import coil3.compose.AsyncImage
+import com.example.recetarioapp.presentation.models.Receta
 import com.example.recetarioapp.presentation.models.Recipe
 
 @Composable
-fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
+fun RecetaCard(recipe: Receta, modifier: Modifier = Modifier) {
     Column(modifier = modifier.width(180.dp)) {
         Box(
             modifier = Modifier
@@ -33,8 +35,8 @@ fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
         ) {
             // Imagen
             AsyncImage(
-                model = recipe.imageUrl,
-                contentDescription = recipe.title,
+                model = recipe.image,
+                contentDescription = recipe.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
@@ -62,11 +64,6 @@ fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
                     .background(Color(0xFFFFC107), RoundedCornerShape(12.dp))
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
-                Text(
-                    text = "⭐ ${recipe.rating}",
-                    fontSize = 12.sp,
-                    color = Color.Black
-                )
             }
         }
 
@@ -74,7 +71,7 @@ fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
 
         // Título
         Text(
-            text = recipe.title,
+            text = recipe.name,
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Black,
             maxLines = 1
@@ -82,7 +79,7 @@ fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
 
         // Categoría
         Text(
-            text = recipe.category,
+            text = recipe.idcategory,
             style = MaterialTheme.typography.bodySmall,
             color = Color.Gray,
             maxLines = 1
@@ -95,14 +92,5 @@ fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
 @Preview(showBackground = false)
 @Composable
 fun PreviewRecipeCard() {
-    RecetaCard(
-        recipe = Recipe(
-            title = "Chicken Curry",
-            category = "Asian",
-            imageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.hellofresh.es%2Frecipes%2Frecetas-caseras&psig=AOvVaw10FLmwDvCy99I1LnFhi-Oo&ust=1749261349643000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDH0L3Y240DFQAAAAAdAAAAABAE", // imagen libre de ejemplo
-            rating = 4.8,
-            time = "15 min",
-            decription = ""
-        )
-    )
+
 }

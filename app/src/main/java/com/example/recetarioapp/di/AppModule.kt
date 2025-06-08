@@ -13,7 +13,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    private const val BASE_URL = "https://recipi-api.onrender.com/"
+    private const val BASE_URL = "https://newapirecipie.onrender.com/"
 
     @Provides
     @Singleton
