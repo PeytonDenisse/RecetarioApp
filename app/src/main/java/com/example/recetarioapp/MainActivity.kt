@@ -16,13 +16,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.example.recetarioapp.presentation.screens.HomeScreen
+import com.example.recetarioapp.presentation.screens.RecetaDetail
 import com.example.recetarioapp.presentation.ui.theme.RecetarioAppTheme
 import com.example.recetarioapp.presentation.utils.Bookmark
 import com.example.recetarioapp.presentation.utils.Home
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,11 +109,18 @@ class MainActivity : ComponentActivity() {
                             HomeScreen(innerPadding = innerPadding, navController = navController)
                         }
 
+                        composable("add") {
+                            Text("Pantalla Agregar", modifier = Modifier.padding(16.dp))
+                        }
+
                         composable("favorites") {
-                            // Pantalla de favoritos
                             Text("Pantalla Favoritos", modifier = Modifier.padding(16.dp))
                         }
 
+                        composable("recetaDetail/{id}") { backStackEntry ->
+                            val recetaId = backStackEntry.arguments?.getString("id") ?: ""
+                            RecetaDetail(recetaId = recetaId, navController = navController)
+                        }
 
                     }
                 }
