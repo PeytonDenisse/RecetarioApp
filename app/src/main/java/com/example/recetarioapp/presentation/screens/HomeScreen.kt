@@ -145,10 +145,12 @@ fun HomeScreen(
                         items(recetasFiltradas) { recipe ->
                             RecetaCard(
                                 recipe = recipe,
+                                categorias = categorias,
                                 onClick = {
                                     navController.navigate("recetaDetail/${recipe._id}")
                                 }
                             )
+
                         }
                     }
                 }

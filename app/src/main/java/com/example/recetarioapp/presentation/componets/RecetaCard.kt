@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.example.recetarioapp.presentation.models.Categoria
 import com.example.recetarioapp.presentation.models.Receta
 
 import com.example.recetarioapp.presentation.models.Recipe
@@ -35,9 +36,14 @@ import com.example.recetarioapp.presentation.utils.Heart
 @Composable
 fun RecetaCard(
     recipe: Receta,
+    categorias: List<Categoria>,
     onClick: () -> Unit
 ) {
     var isFavorite by remember { mutableStateOf(false) }
+
+    // Buscar el nombre de la categoría según el id
+    val categoriaNombre = categorias.find { it._id == recipe.idcategory }?.category ?: "Sin categoría"
+
 
     Column(
         modifier = Modifier
@@ -65,7 +71,7 @@ fun RecetaCard(
                     .padding(8.dp)
                     .background(Color.White.copy(alpha = 0.3f), RoundedCornerShape(50))
                     .padding(6.dp)
-                    .clickable { isFavorite = !isFavorite }  // Este es independiente
+                    .clickable { isFavorite = !isFavorite }
             )
 
             Box(
@@ -76,7 +82,7 @@ fun RecetaCard(
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
                 Text(
-                    text = "\uD83D\uDD52 ${recipe.time}",
+                    text = "\uD83D\uDD52 ${recipe.time} min",
                     fontSize = 12.sp,
                     color = Color.Black
                 )
@@ -93,7 +99,7 @@ fun RecetaCard(
         )
 
         Text(
-            text = recipe.name,  // ¿Seguro que quieres mostrar el nombre dos veces? Quizás aquí va otra info.
+            text = categoriaNombre,
             style = MaterialTheme.typography.bodySmall,
             color = Color.Gray,
             maxLines = 1

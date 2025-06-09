@@ -73,6 +73,18 @@ class RecetaViewModel @Inject constructor(
             }
         }
     }
+
+    fun agregarReceta(receta: Receta) {
+        viewModelScope.launch {
+            try {
+                apiService.postReceta(receta)
+                obtenerRecetas() // refresca la lista para que aparezca la nueva receta
+            } catch (e: Exception) {
+                _flujoErroresInterno.emit("Error al agregar receta: ${e.message}")
+            }
+        }
+    }
+
 }
 
 

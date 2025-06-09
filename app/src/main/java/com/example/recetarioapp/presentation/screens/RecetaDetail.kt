@@ -68,6 +68,10 @@ fun RecetaDetail(
     val recetas by viewModel.recetasFlow.collectAsState(initial = emptyList())
     val receta = recetas.find { it._id == recetaId }
 
+    val categorias by viewModel.categoriasFlow.collectAsState(initial = emptyList())
+    val categoriaNombre = categorias.find { it._id == receta?.idcategory }?.category ?: "Sin categoría"
+
+
     LaunchedEffect(Unit) {
         viewModel.obtenerRecetas()
 
@@ -122,8 +126,24 @@ fun RecetaDetail(
                                 textAlign = TextAlign.Start,
                                 modifier = Modifier.fillMaxWidth()
                             )
+
                         }
                     }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    receta?.description?.let {
+                        Text(
+                            text = it,
+                            fontSize = 14.sp,
+                            color = Color.DarkGray,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 4.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -134,6 +154,23 @@ fun RecetaDetail(
                         PillBox(icon = Fire, value = receta?.calories ?: "", label = "Cal")
                         PillBox(icon = Layers, value = "Easy", label = "")
                     }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 8.dp),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        Text(
+                            text = "Categoría: $categoriaNombre",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Gray
+                        )
+                    }
+
 
                     Spacer(modifier = Modifier.height(16.dp))
 
