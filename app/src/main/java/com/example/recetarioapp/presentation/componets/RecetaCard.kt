@@ -27,34 +27,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.example.recetarioapp.presentation.models.Receta
 
 import com.example.recetarioapp.presentation.models.Recipe
 import com.example.recetarioapp.presentation.utils.Heart
 
 @Composable
-fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
+fun RecetaCard(
+    recipe: Receta,
+    onClick: () -> Unit
+) {
+    var isFavorite by remember { mutableStateOf(false) }
 
-    var isFavorite by remember { mutableStateOf(false)
-
-    }
-
-
-        Column(modifier = modifier.width(180.dp)) {
+    Column(
+        modifier = Modifier
+            .width(180.dp)
+            .clickable { onClick() }
+    ) {
         Box(
             modifier = Modifier
                 .height(140.dp)
                 .clip(RoundedCornerShape(16.dp))
         ) {
-            // Imagen
             AsyncImage(
-                model = recipe.imageUrl,
-                contentDescription = recipe.title,
+                model = recipe.image,
+                contentDescription = recipe.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
 
-
-            // ❤ Ícono de corazón
             Icon(
                 imageVector = Heart,
                 contentDescription = "Favorite",
@@ -64,10 +65,9 @@ fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
                     .padding(8.dp)
                     .background(Color.White.copy(alpha = 0.3f), RoundedCornerShape(50))
                     .padding(6.dp)
-                    .clickable { isFavorite = !isFavorite }
+                    .clickable { isFavorite = !isFavorite }  // Este es independiente
             )
 
-            // Etiqueta de rating (abajo derecha)
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
@@ -76,7 +76,7 @@ fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
                 Text(
-                    text = "⭐ ${recipe.rating}",
+                    text = "\uD83D\uDD52 ${recipe.time}",
                     fontSize = 12.sp,
                     color = Color.Black
                 )
@@ -85,17 +85,15 @@ fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Título
         Text(
-            text = recipe.title,
+            text = recipe.name,
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Black,
             maxLines = 1
         )
 
-        // Categoría
         Text(
-            text = recipe.category,
+            text = recipe.name,  // ¿Seguro que quieres mostrar el nombre dos veces? Quizás aquí va otra info.
             style = MaterialTheme.typography.bodySmall,
             color = Color.Gray,
             maxLines = 1
@@ -105,17 +103,9 @@ fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
 
 
 
+
 @Preview(showBackground = false)
 @Composable
 fun PreviewRecipeCard() {
-    RecetaCard(
-        recipe = Recipe(
-            title = "Chicken Curry",
-            category = "Asian",
-            imageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.hellofresh.es%2Frecipes%2Frecetas-caseras&psig=AOvVaw10FLmwDvCy99I1LnFhi-Oo&ust=1749261349643000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDH0L3Y240DFQAAAAAdAAAAABAE", // imagen libre de ejemplo
-            rating = 4.8,
-            time = "15 min",
-            decription = ""
-        )
-    )
+
 }

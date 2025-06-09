@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,12 +16,13 @@ import androidx.compose.ui.unit.sp
 
 import androidx.compose.ui.layout.ContentScale
 import coil3.compose.AsyncImage
+import com.example.recetarioapp.presentation.models.Categoria
 import com.example.recetarioapp.presentation.models.Category
 
 
 @Composable
 fun CategoryCard(
-    category: Category,
+    category: Categoria,
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
@@ -43,8 +43,8 @@ fun CategoryCard(
             contentAlignment = Alignment.Center
         ) {
             AsyncImage(
-                model = category.imageUrl,
-                contentDescription = category.name,
+                model = category.image,
+                contentDescription = category.category,
                 modifier = Modifier
                     .size(36.dp)
                     .clip(CircleShape),
@@ -55,7 +55,7 @@ fun CategoryCard(
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = category.name,
+            text = category.category,
             color = textColor,
             fontSize = 13.sp
         )
@@ -65,14 +65,4 @@ fun CategoryCard(
 @Preview(showBackground = false)
 @Composable
 fun PreviewCategoryCard() {
-    var isSelected by remember { mutableStateOf(true) }
-
-    CategoryCard(
-        category = Category(
-            name = "Popular",
-            imageUrl = "https://cdn-icons-png.flaticon.com/512/3703/3703377.png"
-        ),
-        isSelected = isSelected,
-        onClick = { isSelected = !isSelected }
-    )
 }
