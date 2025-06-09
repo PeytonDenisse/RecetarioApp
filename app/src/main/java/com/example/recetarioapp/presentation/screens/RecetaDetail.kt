@@ -41,7 +41,7 @@ import com.example.recetarioapp.icons.StarFilled
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun RecetaDetail (name: String, modifier: Modifier = Modifier) {
+fun RecetaDetail (recetaId: String) {
     Box(
         modifier = Modifier
             .fillMaxSize()
