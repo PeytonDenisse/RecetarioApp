@@ -6,9 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.recetarioapp.presentation.models.Categorias
-import com.example.recetarioapp.presentation.models.Recetas
-import com.example.recetarioapp.presentation.models.Usuarios
+import com.example.recetarioapp.presentation.models.Categoria
+import com.example.recetarioapp.presentation.models.Receta
+import com.example.recetarioapp.presentation.models.Usuario
 import com.example.recetarioapp.services.ApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,22 +17,22 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RecipeViewModel @Inject constructor(
+class RecetaViewModel @Inject constructor(
     private val apiService: ApiService
 
 ) : ViewModel() {
 
-    private val _recetasFlow = MutableSharedFlow<List<Recetas>>()
-    val recetasFlow = _recetasFlow.asSharedFlow()
+    private val _flujoRecetasInterno  = MutableSharedFlow<List<Receta>>()
+    val recetasFlow = _flujoRecetasInterno .asSharedFlow()
 
-    private val _categoriasFlow = MutableSharedFlow<List<Categorias>>()
-    val categoriasFlow = _categoriasFlow.asSharedFlow()
+    private val _flujoCategoriasInterno  = MutableSharedFlow<List<Categoria>>()
+    val categoriasFlow = _flujoCategoriasInterno .asSharedFlow()
 
-    private val _usuariosFlow = MutableSharedFlow<List<Usuarios>>()
-    val usuariosFlow = _usuariosFlow.asSharedFlow()
+    private val _flujoUsuariosInterno  = MutableSharedFlow<List<Usuario>>()
+    val usuariosFlow = _flujoUsuariosInterno .asSharedFlow()
 
-    private val _errorFlow = MutableSharedFlow<String>()
-    val errorFlow = _errorFlow.asSharedFlow()
+    private val _flujoErroresInterno  = MutableSharedFlow<String>()
+    val errorFlow = _flujoErroresInterno .asSharedFlow()
 
     init {
         obtenerRecetas()
@@ -44,9 +44,10 @@ class RecipeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val recetas = apiService.getRecetas()
-                _recetasFlow.emit(recetas)
+                _flujoRecetasInterno.emit(recetas)
             } catch (e: Exception) {
-                _errorFlow.emit("Error cargando recetas")
+                Log.e("RecetaViewModel", "Error cargando recetas", e)
+                _flujoErroresInterno.emit("Error cargando recetas")
             }
         }
     }
@@ -55,9 +56,9 @@ class RecipeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val cats = apiService.getCategorias()
-                _categoriasFlow.emit(cats)
+                _flujoCategoriasInterno.emit(cats)
             } catch (e: Exception) {
-                _errorFlow.emit("Error cargando categorías")
+                _flujoErroresInterno.emit("Error cargando categorías")
             }
         }
     }
@@ -66,9 +67,9 @@ class RecipeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val usuarios = apiService.getUsuarios()
-                _usuariosFlow.emit(usuarios)
+                _flujoUsuariosInterno.emit(usuarios)
             } catch (e: Exception) {
-                _errorFlow.emit("Error cargando usuarios")
+                _flujoErroresInterno.emit("Error cargando usuarios")
             }
         }
     }

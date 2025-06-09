@@ -1,19 +1,19 @@
 package com.example.recetarioapp.services
 
-import com.example.recetarioapp.presentation.models.Categorias
-import com.example.recetarioapp.presentation.models.Recetas
-import com.example.recetarioapp.presentation.models.Usuarios
+import com.example.recetarioapp.presentation.models.Categoria
+import com.example.recetarioapp.presentation.models.Receta
+import com.example.recetarioapp.presentation.models.Usuario
 import retrofit2.http.GET
 
 interface ApiService {
 
     @GET("users")
-    suspend fun getUsuarios(): List<Usuarios>
+    suspend fun getUsuarios(): List<Usuario>
 
     @GET("recipes")
-    suspend fun getRecetas(): List<Recetas>
+    suspend fun getRecetas(): List<Receta>
 
     @GET("categories")
-    suspend fun getCategorias(): List<Categorias>
+    suspend fun getCategorias(): List<Categoria>
 
 }
