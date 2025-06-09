@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.*
+import com.example.recetarioapp.presentation.screens.FavoritesScreens
 import com.example.recetarioapp.presentation.screens.HomeScreen
 import com.example.recetarioapp.presentation.screens.RecetaDetail
 import com.example.recetarioapp.presentation.ui.theme.RecetarioAppTheme
@@ -114,7 +115,12 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("favorites") {
+
                             Text("Pantalla Favoritos", modifier = Modifier.padding(16.dp))
+
+                            FavoritesScreens(innerPadding = innerPadding, navController = navController)
+                        }
+
                         }
 
                         composable("recetaDetail/{id}") { backStackEntry ->
@@ -127,7 +133,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
+
+
 
 
 @Preview(showBackground = true)
