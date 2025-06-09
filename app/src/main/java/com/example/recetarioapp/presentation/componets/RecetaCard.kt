@@ -1,6 +1,7 @@
 package com.example.recetarioapp.presentation.componets
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,9 +10,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,40 +27,52 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.example.recetarioapp.presentation.models.Recipe
+import com.example.recetarioapp.presentation.models.Categoria
+import com.example.recetarioapp.presentation.models.Receta
+
+import com.example.recetarioapp.presentation.utils.Heart
 
 @Composable
-fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
-    Column(modifier = modifier.width(180.dp)) {
+fun RecetaCard(
+    recipe: Receta,
+    categorias: List<Categoria>,
+    onClick: () -> Unit
+) {
+    var isFavorite by remember { mutableStateOf(false) }
+
+    // Buscar el nombre de la categoría según el id
+    val categoriaNombre = categorias.find { it._id == recipe.idcategory }?.category ?: "Sin categoría"
+
+
+    Column(
+        modifier = Modifier
+            .width(180.dp)
+            .clickable { onClick() }
+    ) {
         Box(
             modifier = Modifier
                 .height(140.dp)
                 .clip(RoundedCornerShape(16.dp))
         ) {
-            // Imagen
             AsyncImage(
-                model = recipe.imageUrl,
-                contentDescription = recipe.title,
+                model = recipe.image,
+                contentDescription = recipe.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
 
-            // Etiqueta de tiempo (arriba izquierda)
-            Box(
+            Icon(
+                imageVector = Heart,
+                contentDescription = "Favorite",
+                tint = if (isFavorite) Color.Red else Color.DarkGray,
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .padding(8.dp)
-                    .background(Color.Black.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-            ) {
-                Text(
-                    text = recipe.time,
-                    fontSize = 12.sp,
-                    color = Color.Black
-                )
-            }
+                    .background(Color.White.copy(alpha = 0.3f), RoundedCornerShape(50))
+                    .padding(6.dp)
+                    .clickable { isFavorite = !isFavorite }
+            )
 
-            // Etiqueta de rating (abajo derecha)
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
@@ -63,7 +81,7 @@ fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
                 Text(
-                    text = "⭐ ${recipe.rating}",
+                    text = "\uD83D\uDD52 ${recipe.time} min",
                     fontSize = 12.sp,
                     color = Color.Black
                 )
@@ -72,17 +90,15 @@ fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Título
         Text(
-            text = recipe.title,
+            text = recipe.name,
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Black,
             maxLines = 1
         )
 
-        // Categoría
         Text(
-            text = recipe.category,
+            text = categoriaNombre,
             style = MaterialTheme.typography.bodySmall,
             color = Color.Gray,
             maxLines = 1
@@ -92,17 +108,9 @@ fun RecetaCard(recipe: Recipe, modifier: Modifier = Modifier) {
 
 
 
+
 @Preview(showBackground = false)
 @Composable
 fun PreviewRecipeCard() {
-    RecetaCard(
-        recipe = Recipe(
-            title = "Chicken Curry",
-            category = "Asian",
-            imageUrl = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.hellofresh.es%2Frecipes%2Frecetas-caseras&psig=AOvVaw10FLmwDvCy99I1LnFhi-Oo&ust=1749261349643000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJDH0L3Y240DFQAAAAAdAAAAABAE", // imagen libre de ejemplo
-            rating = 4.8,
-            time = "15 min",
-            decription = ""
-        )
-    )
+
 }

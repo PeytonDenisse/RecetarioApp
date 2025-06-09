@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,12 +16,21 @@ import androidx.compose.ui.unit.sp
 
 import androidx.compose.ui.layout.ContentScale
 import coil3.compose.AsyncImage
+<<<<<<< HEAD
 import com.example.recetarioapp.presentation.models.cat
+=======
+import com.example.recetarioapp.presentation.models.Categoria
+import com.example.recetarioapp.presentation.models.Category
+>>>>>>> 91e2e140a2eb5abd24b944a126164f4de6277174
 
 
 @Composable
 fun CategoryCard(
+<<<<<<< HEAD
     category: cat,
+=======
+    category: Categoria,
+>>>>>>> 91e2e140a2eb5abd24b944a126164f4de6277174
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
@@ -43,8 +51,8 @@ fun CategoryCard(
             contentAlignment = Alignment.Center
         ) {
             AsyncImage(
-                model = category.imageUrl,
-                contentDescription = category.name,
+                model = category.image,
+                contentDescription = category.category,
                 modifier = Modifier
                     .size(36.dp)
                     .clip(CircleShape),
@@ -55,7 +63,7 @@ fun CategoryCard(
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = category.name,
+            text = category.category,
             color = textColor,
             fontSize = 13.sp
         )
@@ -65,6 +73,7 @@ fun CategoryCard(
 @Preview(showBackground = false)
 @Composable
 fun PreviewCategoryCard() {
+<<<<<<< HEAD
     var isSelected by remember { mutableStateOf(true) }
 
     CategoryCard(
@@ -75,4 +84,6 @@ fun PreviewCategoryCard() {
         isSelected = isSelected,
         onClick = { isSelected = !isSelected }
     )
+=======
+>>>>>>> 91e2e140a2eb5abd24b944a126164f4de6277174
 }
