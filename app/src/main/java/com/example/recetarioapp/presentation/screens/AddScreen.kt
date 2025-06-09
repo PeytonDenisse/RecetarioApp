@@ -139,6 +139,8 @@ fun AddScreen(
                         )
 
                         viewModel.agregarReceta(receta)
+                        viewModel.obtenerRecetas()
+                        navController.navigateUp()
                         Toast.makeText(context, "Receta guardada", Toast.LENGTH_SHORT).show()
                         navController.popBackStack()
                     } else {
