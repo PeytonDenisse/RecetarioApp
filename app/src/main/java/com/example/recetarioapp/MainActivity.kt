@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.*
+import com.example.recetarioapp.presentation.screens.AddRecetaScreen
 import com.example.recetarioapp.presentation.screens.FavoritesScreens
 import com.example.recetarioapp.presentation.screens.HomeScreen
 import com.example.recetarioapp.presentation.screens.RecetaDetail
@@ -113,7 +114,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("add") {
-                            Text("Pantalla Agregar", modifier = Modifier.padding(16.dp))
+                            AddRecetaScreen(innerPadding = innerPadding, navController = navController)
                         }
 
                         composable("favorites") {

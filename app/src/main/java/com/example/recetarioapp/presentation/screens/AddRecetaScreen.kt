@@ -33,16 +33,16 @@ fun AddRecetaScreen(
     var ingredients by remember { mutableStateOf("") }
     var steps by remember { mutableStateOf("") }
 
+    val scrollState = rememberScrollState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)
-            .background(Color(0xFFF9F9F9))
-            .padding(horizontal = 16.dp)
+            .background(Color(0xFFF5F5FA))
+            .verticalScroll(scrollState) // ✅ Scroll activado
+            .padding(16.dp)
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Header
         Text(
             text = "Agregar Receta",
             style = MaterialTheme.typography.titleLarge,
@@ -52,63 +52,32 @@ fun AddRecetaScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // General Info Card
-        Card(
-            shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(4.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Nombre") }, modifier = Modifier.fillMaxWidth())
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(value = description, onValueChange = { description = it }, label = { Text("Descripción") }, modifier = Modifier.fillMaxWidth())
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(value = image, onValueChange = { image = it }, label = { Text("URL de Imagen") }, modifier = Modifier.fillMaxWidth())
+        // Bloques iguales a antes
+        CardSection {
+            OutlinedInput("Nombre", name) { name = it }
+            OutlinedInput("Descripción", description) { description = it }
+            OutlinedInput("URL de Imagen", image) { image = it }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        CardSection {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                OutlinedInput("Calorías", calories, Modifier.weight(1f)) { calories = it }
+                OutlinedInput("Porciones", serving, Modifier.weight(1f)) { serving = it }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                OutlinedInput("Tiempo", time, Modifier.weight(1f)) { time = it }
+                OutlinedInput("Categoría", category, Modifier.weight(1f)) { category = it }
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Extra info Card
-        Card(
-            shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(4.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                OutlinedTextField(value = calories, onValueChange = { calories = it }, label = { Text("Calorías") }, modifier = Modifier.fillMaxWidth())
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(value = serving, onValueChange = { serving = it }, label = { Text("Porciones") }, modifier = Modifier.fillMaxWidth())
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(value = time, onValueChange = { time = it }, label = { Text("Tiempo estimado") }, modifier = Modifier.fillMaxWidth())
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(value = category, onValueChange = { category = it }, label = { Text("ID Categoría") }, modifier = Modifier.fillMaxWidth())
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Ingredientes y Pasos
-        Card(
-            shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(4.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                OutlinedTextField(
-                    value = ingredients,
-                    onValueChange = { ingredients = it },
-                    label = { Text("Ingredientes (separados por coma)") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = steps,
-                    onValueChange = { steps = it },
-                    label = { Text("Pasos (separados por coma)") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+        CardSection {
+            OutlinedInput("Ingredientes (coma)", ingredients) { ingredients = it }
+            OutlinedInput("Pasos (coma)", steps) { steps = it }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -129,18 +98,25 @@ fun AddRecetaScreen(
                     pasos = steps.split(",").map { it.trim() }
                 )
                 println("Receta creada: $receta")
-                navController.navigate("home") { popUpTo("home") { inclusive = true } }
+                navController.navigate("home") {
+                    popUpTo("home") { inclusive = true }
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
+                .height(56.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
         ) {
-            Text("Guardar Receta")
+            Text("Guardar Receta", color = Color.White)
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(32.dp)) // Para evitar que el botón quede pegado abajo
     }
 }
+
+
+
 
 
 
