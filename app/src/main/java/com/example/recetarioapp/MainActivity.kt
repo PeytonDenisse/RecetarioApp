@@ -75,10 +75,11 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 ) { innerPadding ->
-                    NavHost(navController = navController, startDestination = "home", modifier = Modifier.padding(innerPadding)) {
-                        composable("home") {
-                            HomeScreen()
-                        }
+                    NavHost(
+                        navController = navController,
+                        startDestination = "home",
+                        modifier = Modifier.padding(innerPadding))
+                    {
                         composable("add") {
                             Text("Pantalla Agregar", modifier = Modifier.padding(16.dp))
                         }

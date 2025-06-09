@@ -29,7 +29,7 @@ import androidx.compose.ui.text.input.KeyboardType.Companion.Uri
 import androidx.navigation.NavController
 
 @Composable
-fun HomeScreen(
+fun HomeScreen2(
     viewModel: RecetaViewModel = hiltViewModel(),
     navController: NavController
 ) {
@@ -146,10 +146,4 @@ fun HomeScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    HomeScreen(navController = NavController(LocalContext.current))
 }

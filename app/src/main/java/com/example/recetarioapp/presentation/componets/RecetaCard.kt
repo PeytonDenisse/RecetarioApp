@@ -26,8 +26,11 @@ import com.example.recetarioapp.presentation.models.Receta
 import com.example.recetarioapp.presentation.models.Recipe
 
 @Composable
-fun RecetaCard(recipe: Receta, modifier: Modifier = Modifier) {
-    Column(modifier = modifier.width(180.dp)) {
+fun RecetaCard(
+    recipe: Receta,
+    onClick: () -> Unit = {}
+){
+    Column(modifier = Modifier.width(180.dp)) {
         Box(
             modifier = Modifier
                 .height(140.dp)
