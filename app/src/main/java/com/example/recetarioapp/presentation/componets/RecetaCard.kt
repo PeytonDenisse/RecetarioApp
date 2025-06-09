@@ -65,7 +65,7 @@ fun RecetaCard(
                     .padding(8.dp)
                     .background(Color.White.copy(alpha = 0.3f), RoundedCornerShape(50))
                     .padding(6.dp)
-                    .clickable { isFavorite = !isFavorite }  // Este es independiente
+                    .clickable { isFavorite = !isFavorite }
             )
 
             Box(
@@ -76,7 +76,7 @@ fun RecetaCard(
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
                 Text(
-                    text = "\uD83D\uDD52 ${recipe.time}",
+                    text = "\uD83D\uDD52 ${recipe.time} min",
                     fontSize = 12.sp,
                     color = Color.Black
                 )
@@ -93,7 +93,7 @@ fun RecetaCard(
         )
 
         Text(
-            text = recipe.name,  // ¿Seguro que quieres mostrar el nombre dos veces? Quizás aquí va otra info.
+            text = recipe.name,
             style = MaterialTheme.typography.bodySmall,
             color = Color.Gray,
             maxLines = 1
