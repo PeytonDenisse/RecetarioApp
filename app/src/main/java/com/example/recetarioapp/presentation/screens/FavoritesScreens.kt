@@ -22,7 +22,7 @@ import com.example.recetarioapp.presentation.models.sampleRecipes
 fun FavoritesScreens(
     innerPadding: PaddingValues,
     navController: NavHostController,
-    favorites: List<Recipe> = sampleRecipes // reemplazar luego con favoritos reales
+    favorites: List<Recipe> = sampleRecipes
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Header()
@@ -55,7 +55,7 @@ fun FavoritesScreens(
                         FavoriteCard(
                             recipe = receta,
                             onActionClick = {
-                                navController.navigate("detail/${receta.title}") // o receta.id si tienes uno
+                                navController.navigate("detail/${receta.title}")
                             }
                         )
                     }
