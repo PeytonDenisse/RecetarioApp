@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.example.recetarioapp.presentation.models.Categoria
 import com.example.recetarioapp.presentation.models.Receta
 
 import com.example.recetarioapp.presentation.models.Recipe
@@ -35,9 +36,14 @@ import com.example.recetarioapp.presentation.utils.Heart
 @Composable
 fun RecetaCard(
     recipe: Receta,
+    categorias: List<Categoria>,
     onClick: () -> Unit
 ) {
     var isFavorite by remember { mutableStateOf(false) }
+
+    // Buscar el nombre de la categoría según el id
+    val categoriaNombre = categorias.find { it._id == recipe.idcategory }?.category ?: "Sin categoría"
+
 
     Column(
         modifier = Modifier
@@ -93,7 +99,7 @@ fun RecetaCard(
         )
 
         Text(
-            text = recipe.name,
+            text = categoriaNombre,
             style = MaterialTheme.typography.bodySmall,
             color = Color.Gray,
             maxLines = 1
