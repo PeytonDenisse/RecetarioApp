@@ -70,6 +70,7 @@ fun RecetaDetail(
 
     LaunchedEffect(Unit) {
         viewModel.obtenerRecetas()
+
         viewModel.errorFlow.collect {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
@@ -122,48 +123,6 @@ fun RecetaDetail(
                                 modifier = Modifier.fillMaxWidth()
                             )
                         }
-
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxWidth()
-                                .wrapContentSize(Alignment.CenterEnd)
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .background(Color.Yellow, shape = RoundedCornerShape(50))
-                                    .padding(horizontal = 8.dp, vertical = 4.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp)
-                            ) {
-                                Image(
-                                    imageVector = StarFilled,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(19.dp),
-                                    colorFilter = ColorFilter.tint(Color.Black)
-                                )
-                                Text(
-                                    text = "4.5",
-                                    fontSize = 17.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.Black,
-                                )
-                            }
-                        }
-                    }
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 12.dp, bottom = 15.dp),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        Text(
-                            text = "Food",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.LightGray
-                        )
                     }
 
                     Row(
@@ -262,9 +221,9 @@ fun PillBox(icon: ImageVector, value: String, label: String) {
     Box(
         modifier = Modifier
             .width(70.dp)
-            .height(110.dp)
+            .height(120.dp)
             .clip(RoundedCornerShape(75.dp))
-            .background(color = Color.Yellow)
+            .background(color = Color(0xFFFFC107))
             .padding(4.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -277,7 +236,7 @@ fun PillBox(icon: ImageVector, value: String, label: String) {
                 modifier = Modifier
                     .size(55.dp)
                     .clip(CircleShape)
-                    .background(color = Color.White),
+                    .background(color = Color(0xFFffd863)),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
