@@ -60,6 +60,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation("io.coil-kt.coil3:coil-compose:3.1.0")
@@ -68,9 +69,6 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.9.0")
     //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-
     implementation(libs.kotlinx.serialization.json)
 
     //Dagger Hilt
@@ -81,7 +79,8 @@ dependencies {
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
 
 
-    implementation( "androidx.navigation:navigation-compose:<versión>")
-    implementation ("androidx.navigation:navigation-animation:<versión>") // o accompanist
+    implementation("androidx.navigation:navigation-compose:2.7.6")
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.33.2-alpha")
+    // o accompanist
 
 }

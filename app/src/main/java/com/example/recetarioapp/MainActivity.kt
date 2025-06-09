@@ -25,6 +25,8 @@ import com.example.recetarioapp.presentation.utils.Bookmark
 import com.example.recetarioapp.presentation.utils.Home
 import dagger.hilt.android.AndroidEntryPoint
 
+
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -121,12 +123,14 @@ class MainActivity : ComponentActivity() {
                             FavoritesScreens(innerPadding = innerPadding, navController = navController)
                         }
 
-                        }
-
                         composable("recetaDetail/{id}") { backStackEntry ->
                             val recetaId = backStackEntry.arguments?.getString("id") ?: ""
                             RecetaDetail(recetaId = recetaId, navController = navController)
                         }
+
+                        }
+
+
 
                     }
                 }
