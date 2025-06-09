@@ -236,7 +236,7 @@ fun PillBox(icon: ImageVector, value: String, label: String) {
                 modifier = Modifier
                     .size(55.dp)
                     .clip(CircleShape)
-                    .background(color = Color.White),
+                    .background(color = Color(0xFFffd863)),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
