@@ -4,7 +4,9 @@ package com.example.recetarioapp.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -114,6 +116,31 @@ fun AddRecetaScreen(
         Spacer(modifier = Modifier.height(32.dp)) // Para evitar que el botón quede pegado abajo
     }
 }
+
+
+@Composable
+fun OutlinedInput(label: String, value: String, modifier: Modifier = Modifier, onValueChange: (String) -> Unit) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        shape = RoundedCornerShape(12.dp),
+        singleLine = true,
+        modifier = modifier.fillMaxWidth()
+    )
+}
+
+@Composable
+fun CardSection(content: @Composable ColumnScope.() -> Unit) {
+    Card(
+        shape = RoundedCornerShape(20.dp),
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(4.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp), content = content)
+    }
+}
+
 
 
 
