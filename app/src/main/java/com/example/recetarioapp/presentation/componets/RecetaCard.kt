@@ -1,5 +1,8 @@
 package com.example.recetarioapp.presentation.componets
 
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -26,24 +29,27 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil3.compose.AsyncImage
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.recetarioapp.presentation.models.Categoria
 import com.example.recetarioapp.presentation.models.Receta
 
-import com.example.recetarioapp.presentation.models.Recipe
 import com.example.recetarioapp.presentation.utils.Heart
+import com.example.recetarioapp.presentation.viewModels.RecetaViewModel
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun RecetaCard(
     recipe: Receta,
     categorias: List<Categoria>,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onFavoriteClick: () -> Unit
 ) {
-    var isFavorite by remember { mutableStateOf(false) }
+    Log.d("RecetaCard", "URL de imagen: ${recipe.image}")
 
-    // Buscar el nombre de la categoría según el id
     val categoriaNombre = categorias.find { it._id == recipe.idcategory }?.category ?: "Sin categoría"
-
 
     Column(
         modifier = Modifier
@@ -55,7 +61,7 @@ fun RecetaCard(
                 .height(140.dp)
                 .clip(RoundedCornerShape(16.dp))
         ) {
-            AsyncImage(
+            GlideImage(
                 model = recipe.image,
                 contentDescription = recipe.name,
                 contentScale = ContentScale.Crop,
@@ -65,13 +71,15 @@ fun RecetaCard(
             Icon(
                 imageVector = Heart,
                 contentDescription = "Favorite",
-                tint = if (isFavorite) Color.Red else Color.DarkGray,
+                tint = if (recipe.favorite) Color.Red else Color.DarkGray,
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .padding(8.dp)
                     .background(Color.White.copy(alpha = 0.3f), RoundedCornerShape(50))
                     .padding(6.dp)
-                    .clickable { isFavorite = !isFavorite }
+                    .clickable {
+                        onFavoriteClick()
+                    }
             )
 
             Box(
