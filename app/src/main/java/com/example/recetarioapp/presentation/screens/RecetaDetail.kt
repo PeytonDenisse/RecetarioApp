@@ -151,7 +151,7 @@ fun RecetaDetail(
                         PillBox(icon = ClockHistory, value = receta?.time ?: "", label = "min")
                         PillBox(icon = PersonHearts, value = receta?.serving ?: "", label = "serving")
                         PillBox(icon = Fire, value = receta?.calories ?: "", label = "Cal")
-                        PillBox(icon = Layers, value = "Easy", label = "")
+                        PillBox(icon = Layers, value = receta?.dificulty?:"", label = "Level")
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))

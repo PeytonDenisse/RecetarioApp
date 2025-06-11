@@ -49,10 +49,7 @@ fun RecetaCard(
 ) {
     Log.d("RecetaCard", "URL de imagen: ${recipe.image}")
 
-    // Buscar el nombre de la categoría según el id
     val categoriaNombre = categorias.find { it._id == recipe.idcategory }?.category ?: "Sin categoría"
-
-
 
     Column(
         modifier = Modifier
