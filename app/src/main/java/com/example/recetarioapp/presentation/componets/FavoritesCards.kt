@@ -23,14 +23,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.example.recetarioapp.presentation.models.Categoria
 import com.example.recetarioapp.presentation.models.Receta
 
 @Composable
 fun FavoriteCard(
     recipe: Receta,
+    categorias: List<Categoria>,
     onActionClick: () -> Unit,
     onFavoriteClick: () -> Unit
 ) {
+    val categoriaNombre = categorias.find { it._id == recipe.idcategory }?.category ?: "Sin categoría"
+
     Card(
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier
@@ -45,7 +49,6 @@ fun FavoriteCard(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Imagen de receta
             AsyncImage(
                 model = recipe.image,
                 contentDescription = recipe.name,
@@ -57,7 +60,6 @@ fun FavoriteCard(
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            // Info de la receta
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = recipe.name,
@@ -66,15 +68,13 @@ fun FavoriteCard(
                     maxLines = 1
                 )
                 Text(
-                    text = recipe.idcategory,
+                    text = categoriaNombre,
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.Gray,
                     maxLines = 1
                 )
-
             }
 
-            // Botón
             Button(
                 onClick = onActionClick,
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFC107)),
@@ -85,6 +85,7 @@ fun FavoriteCard(
         }
     }
 }
+
 
 
 @Preview(showBackground = false)

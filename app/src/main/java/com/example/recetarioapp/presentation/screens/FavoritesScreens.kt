@@ -21,8 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.recetarioapp.presentation.componets.FavoriteCard
+import com.example.recetarioapp.presentation.models.Categoria
 import com.example.recetarioapp.presentation.models.Receta
 import com.example.recetarioapp.presentation.viewModels.RecetaViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun FavoritesScreens(
@@ -32,17 +34,25 @@ fun FavoritesScreens(
 ) {
     val context = LocalContext.current
     val recetas = remember { mutableStateListOf<Receta>() }
+    val categorias = remember { mutableStateListOf<Categoria>() }
 
     // Cargar recetas al entrar
     LaunchedEffect(Unit) {
         viewModel.obtenerRecetas()
-    }
+        viewModel.obtenerCategorias()
 
-    // Recolectar flows por separado
-    LaunchedEffect(true) {
-        viewModel.recetasFlow.collect { lista ->
-            recetas.clear()
-            recetas.addAll(lista)
+        launch {
+            viewModel.categoriasFlow.collect { lista ->
+                categorias.clear()
+                categorias.addAll(lista)
+            }
+        }
+
+        launch{
+            viewModel.recetasFlow.collect { lista ->
+                recetas.clear()
+                recetas.addAll(lista)
+            }
         }
     }
 
@@ -86,6 +96,7 @@ fun FavoritesScreens(
                         items(favoritas) { receta ->
                             FavoriteCard(
                                 recipe = receta,
+                                categorias = categorias,
                                 onActionClick = {
                                     navController.navigate("recetaDetail/${receta._id}")
                                 },
