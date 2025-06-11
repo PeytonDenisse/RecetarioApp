@@ -55,6 +55,8 @@ import com.example.recetarioapp.icons.PersonHearts
 import com.example.recetarioapp.icons.StarFilled
 import com.example.recetarioapp.presentation.viewModels.RecetaViewModel
 
+import java.io.File
+
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun RecetaDetail(
@@ -85,12 +87,19 @@ fun RecetaDetail(
             .background(Color.White)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
+            val imageModel = receta?.image?.let {
+                if (it.startsWith("/")) File(it) else it
+            } ?: ""
+
             GlideImage(
-                model = receta?.image ?: "",
+                model = imageModel,
                 contentDescription = null,
-                modifier = Modifier.height(260.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(260.dp),
                 contentScale = ContentScale.Crop
             )
+
         }
 
         Surface(
