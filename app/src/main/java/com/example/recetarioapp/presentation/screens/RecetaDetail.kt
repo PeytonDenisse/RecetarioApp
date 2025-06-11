@@ -53,7 +53,6 @@ import com.example.recetarioapp.icons.Fire
 import com.example.recetarioapp.icons.Layers
 import com.example.recetarioapp.icons.PersonHearts
 import com.example.recetarioapp.icons.StarFilled
-import com.example.recetarioapp.presentation.models.Receta
 import com.example.recetarioapp.presentation.viewModels.RecetaViewModel
 
 @OptIn(ExperimentalGlideComposeApi::class)

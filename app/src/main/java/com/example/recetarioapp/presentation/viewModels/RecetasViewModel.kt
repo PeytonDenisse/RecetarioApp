@@ -10,6 +10,7 @@ import com.example.recetarioapp.presentation.models.Categoria
 import com.example.recetarioapp.presentation.models.Receta
 import com.example.recetarioapp.presentation.models.Usuario
 import com.example.recetarioapp.services.ApiService
+import com.example.recetarioapp.services.FavoritoUpdateRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -78,12 +79,25 @@ class RecetaViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 apiService.postReceta(receta)
-                obtenerRecetas() // refresca la lista para que aparezca la nueva receta
+                obtenerRecetas()
             } catch (e: Exception) {
                 _flujoErroresInterno.emit("Error al agregar receta: ${e.message}")
             }
         }
     }
+
+    fun actualizarFavorito(id: String, nuevoValor: Boolean) {
+        viewModelScope.launch {
+            try {
+                val request = FavoritoUpdateRequest(favorite = nuevoValor)
+                apiService.actualizarRecetaParcial(id, request)
+                obtenerRecetas()
+            } catch (e: Exception) {
+                _flujoErroresInterno.emit("Error al actualizar favorito")
+            }
+        }
+    }
+
 
 }
 

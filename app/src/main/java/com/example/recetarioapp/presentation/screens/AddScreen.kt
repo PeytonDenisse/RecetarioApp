@@ -35,13 +35,12 @@ fun AddScreen(
     var time by remember { mutableStateOf("") }
     var calories by remember { mutableStateOf("") }
     var serving by remember { mutableStateOf("") }
+    var dificulty by remember { mutableStateOf("") } // <-- NUEVO
     var selectedCategoryId by remember { mutableStateOf<String?>(null) }
     var ingredientsText by remember { mutableStateOf("") }
     var pasosText by remember { mutableStateOf("") }
-
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
-    // Launcher para seleccionar imagen
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
         imageUri = it
     }
@@ -52,9 +51,7 @@ fun AddScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        item {
-            Text("Agregar nueva receta", style = MaterialTheme.typography.titleLarge)
-        }
+        item { Text("Agregar nueva receta", style = MaterialTheme.typography.titleLarge) }
 
         item {
             OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Nombre") }, modifier = Modifier.fillMaxWidth())
@@ -74,6 +71,10 @@ fun AddScreen(
 
         item {
             OutlinedTextField(value = serving, onValueChange = { serving = it }, label = { Text("Porciones") }, modifier = Modifier.fillMaxWidth())
+        }
+
+        item {
+            OutlinedTextField(value = dificulty, onValueChange = { dificulty = it }, label = { Text("Dificultad") }, modifier = Modifier.fillMaxWidth()) // <-- NUEVO CAMPO
         }
 
         item {
@@ -132,17 +133,18 @@ fun AddScreen(
                             time = time,
                             calories = calories,
                             serving = serving,
-                            image = imageUri?.toString() ?: "", // usamos la URI
+                            dificulty = dificulty, // <-- NUEVO
+                            image = imageUri?.toString() ?: "",
                             idcategory = selectedCategoryId!!,
                             ingredients = ingredientsText.split(",").map { it.trim() },
-                            pasos = pasosText.split(",").map { it.trim() }
+                            pasos = pasosText.split(",").map { it.trim() },
+                            favorite = false // <-- DEFAULT
                         )
 
                         viewModel.agregarReceta(receta)
                         viewModel.obtenerRecetas()
                         navController.navigateUp()
                         Toast.makeText(context, "Receta guardada", Toast.LENGTH_SHORT).show()
-                        navController.popBackStack()
                     } else {
                         Toast.makeText(context, "Faltan campos obligatorios", Toast.LENGTH_SHORT).show()
                     }

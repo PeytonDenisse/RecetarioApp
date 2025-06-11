@@ -23,17 +23,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.recetarioapp.presentation.models.Recipe
+import com.example.recetarioapp.presentation.models.Receta
 
 @Composable
 fun FavoriteCard(
-    recipe: Recipe,
+    recipe: Receta,
     onActionClick: () -> Unit,
-    modifier: Modifier = Modifier
+    onFavoriteClick: () -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
@@ -47,8 +47,8 @@ fun FavoriteCard(
         ) {
             // Imagen de receta
             AsyncImage(
-                model = recipe.imageUrl,
-                contentDescription = recipe.title,
+                model = recipe.image,
+                contentDescription = recipe.name,
                 modifier = Modifier
                     .size(80.dp)
                     .clip(RoundedCornerShape(12.dp)),
@@ -60,13 +60,13 @@ fun FavoriteCard(
             // Info de la receta
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = recipe.title,
+                    text = recipe.name,
                     style = MaterialTheme.typography.titleMedium,
                     color = Color.Black,
                     maxLines = 1
                 )
                 Text(
-                    text = recipe.category,
+                    text = recipe.idcategory,
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.Gray,
                     maxLines = 1
@@ -90,15 +90,5 @@ fun FavoriteCard(
 @Preview(showBackground = false)
 @Composable
 fun PreviewFavoriteCard() {
-    FavoriteCard(
-        recipe = Recipe(
-            title = "Bear's wish",
-            category = "Infantil",
-            imageUrl = "https://cdn-icons-png.flaticon.com/512/1046/1046757.png",
-            rating = 4.5,
-            time = "15 min",
-            decription = "Un cuento para dormir con moraleja"
-        ),
-        onActionClick = { /* Navegar al detalle o eliminar */ }
-    )
+
 }

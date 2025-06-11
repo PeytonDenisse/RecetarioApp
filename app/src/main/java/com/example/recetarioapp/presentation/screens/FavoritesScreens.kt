@@ -1,6 +1,7 @@
 package com.example.recetarioapp.presentation.screens
 
 import Header
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,20 +11,49 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.recetarioapp.presentation.componets.FavoriteCard
-import com.example.recetarioapp.presentation.models.Recipe
-import com.example.recetarioapp.presentation.models.sampleRecipes
+import com.example.recetarioapp.presentation.models.Receta
+import com.example.recetarioapp.presentation.viewModels.RecetaViewModel
 
 @Composable
 fun FavoritesScreens(
     innerPadding: PaddingValues,
     navController: NavHostController,
-    favorites: List<Recipe> = sampleRecipes // reemplazar luego con favoritos reales
+    viewModel: RecetaViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+    val recetas = remember { mutableStateListOf<Receta>() }
+
+    // Cargar recetas al entrar
+    LaunchedEffect(Unit) {
+        viewModel.obtenerRecetas()
+    }
+
+    // Recolectar flows por separado
+    LaunchedEffect(true) {
+        viewModel.recetasFlow.collect { lista ->
+            recetas.clear()
+            recetas.addAll(lista)
+        }
+    }
+
+    LaunchedEffect(true) {
+        viewModel.errorFlow.collect {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    val favoritas = recetas.filter { it.favorite }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Header()
         Surface(
@@ -38,7 +68,6 @@ fun FavoritesScreens(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .background(Color.White)
                     .padding(horizontal = 16.dp)
             ) {
                 Text(
@@ -48,19 +77,30 @@ fun FavoritesScreens(
                     modifier = Modifier.padding(vertical = 16.dp)
                 )
 
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(favorites) { receta ->
-                        FavoriteCard(
-                            recipe = receta,
-                            onActionClick = {
-                                navController.navigate("detail/${receta.title}") // o receta.id si tienes uno
-                            }
-                        )
+                if (favoritas.isEmpty()) {
+                    Text("No hay recetas favoritas.", color = Color.Gray)
+                } else {
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        items(favoritas) { receta ->
+                            FavoriteCard(
+                                recipe = receta,
+                                onActionClick = {
+                                    navController.navigate("recetaDetail/${receta._id}")
+                                },
+                                onFavoriteClick = {
+                                    viewModel.actualizarFavorito(receta._id, !receta.favorite)
+                                }
+                            )
+                        }
                     }
                 }
             }
         }
     }
 }
+
+
+
+
