@@ -21,6 +21,11 @@ import com.example.recetarioapp.presentation.models.Categoria
 import com.example.recetarioapp.presentation.models.Receta
 import com.example.recetarioapp.presentation.viewModels.RecetaViewModel
 
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+
+
 @Composable
 fun AddScreen(
     navController: NavHostController,
@@ -132,6 +137,22 @@ fun AddScreen(
             Button(
                 onClick = {
                     if (name.isNotBlank() && selectedCategoryId != null) {
+                        // Guardar imagen localmente
+                        val savedImagePath = imageUri?.let { uri ->
+                            try {
+                                val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+                                val file = File(context.filesDir, "imagen_${System.currentTimeMillis()}.jpg")
+                                val outputStream = FileOutputStream(file)
+                                inputStream?.copyTo(outputStream)
+                                outputStream.close()
+                                inputStream?.close()
+                                file.absolutePath // ruta local
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                null
+                            }
+                        } ?: ""
+
                         val receta = Receta(
                             _id = "",
                             __v = 0,
@@ -141,11 +162,11 @@ fun AddScreen(
                             calories = calories,
                             serving = serving,
                             dificulty = dificulty ?: "",
-                            image = imageUri?.toString() ?: "",
+                            image = savedImagePath,
                             idcategory = selectedCategoryId!!,
                             ingredients = ingredientsText.split(",").map { it.trim() },
                             pasos = pasosText.split(",").map { it.trim() },
-                            favorite = false // <-- DEFAULT
+                            favorite = false
                         )
 
                         viewModel.agregarReceta(receta)

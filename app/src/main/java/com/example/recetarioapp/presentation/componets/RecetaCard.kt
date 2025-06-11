@@ -39,6 +39,10 @@ import com.example.recetarioapp.presentation.models.Receta
 import com.example.recetarioapp.presentation.utils.Heart
 import com.example.recetarioapp.presentation.viewModels.RecetaViewModel
 
+import androidx.compose.ui.platform.LocalContext
+import java.io.File
+
+
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun RecetaCard(
@@ -61,12 +65,16 @@ fun RecetaCard(
                 .height(140.dp)
                 .clip(RoundedCornerShape(16.dp))
         ) {
+            val context = LocalContext.current
+            val imageModel = if (recipe.image.startsWith("/")) File(recipe.image) else recipe.image
+
             GlideImage(
-                model = recipe.image,
+                model = imageModel,
                 contentDescription = recipe.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
             )
+
 
             Icon(
                 imageVector = Heart,
