@@ -5,6 +5,8 @@ data class Receta(
     val _id: String,
     val calories: String,
     val description: String,
+    val dificulty: String,
+    val favorite: Boolean,
     val idcategory: String,
     val image: String,
     val ingredients: List<String>,

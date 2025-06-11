@@ -123,12 +123,11 @@ class MainActivity : ComponentActivity() {
                             )
                         }
 
-
                         composable("favorites") {
-
-                            Text("Pantalla Favoritos", modifier = Modifier.padding(16.dp))
-
-                            FavoritesScreens(innerPadding = innerPadding, navController = navController)
+                            FavoritesScreens(
+                                innerPadding = innerPadding,
+                                navController = navController
+                            )
                         }
 
                         composable("recetaDetail/{id}") { backStackEntry ->

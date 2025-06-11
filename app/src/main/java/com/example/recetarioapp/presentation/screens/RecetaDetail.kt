@@ -53,7 +53,6 @@ import com.example.recetarioapp.icons.Fire
 import com.example.recetarioapp.icons.Layers
 import com.example.recetarioapp.icons.PersonHearts
 import com.example.recetarioapp.icons.StarFilled
-import com.example.recetarioapp.presentation.models.Receta
 import com.example.recetarioapp.presentation.viewModels.RecetaViewModel
 
 @OptIn(ExperimentalGlideComposeApi::class)
@@ -152,7 +151,7 @@ fun RecetaDetail(
                         PillBox(icon = ClockHistory, value = receta?.time ?: "", label = "min")
                         PillBox(icon = PersonHearts, value = receta?.serving ?: "", label = "serving")
                         PillBox(icon = Fire, value = receta?.calories ?: "", label = "Cal")
-                        PillBox(icon = Layers, value = "Easy", label = "")
+                        PillBox(icon = Layers, value = receta?.dificulty?:"", label = "Level")
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
