@@ -29,6 +29,7 @@ fun AddScreen(
 ) {
     val context = LocalContext.current
     val categorias = viewModel.categoriasFlow.collectAsState(initial = emptyList()).value
+    val dificultades = listOf("Fácil", "Media", "Difícil")
 
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
@@ -74,8 +75,14 @@ fun AddScreen(
         }
 
         item {
-            OutlinedTextField(value = dificulty, onValueChange = { dificulty = it }, label = { Text("Dificultad") }, modifier = Modifier.fillMaxWidth()) // <-- NUEVO CAMPO
+            DropdownMenuSimple(
+                options = dificultades,
+                selectedOption = dificulty,
+                label = "Dificultad",
+                onSelected = { dificulty = it }
+            )
         }
+
 
         item {
             Button(onClick = { launcher.launch("image/*") }) {
@@ -133,7 +140,7 @@ fun AddScreen(
                             time = time,
                             calories = calories,
                             serving = serving,
-                            dificulty = dificulty, // <-- NUEVO
+                            dificulty = dificulty ?: "",
                             image = imageUri?.toString() ?: "",
                             idcategory = selectedCategoryId!!,
                             ingredients = ingredientsText.split(",").map { it.trim() },
@@ -188,6 +195,46 @@ fun DropdownMenuCategory(
                     text = { Text(categoria.category) },
                     onClick = {
                         onSelected(categoria._id)
+                        expanded = false
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun DropdownMenuSimple(
+    options: List<String>,
+    selectedOption: String?,
+    label: String,
+    onSelected: (String) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box {
+        OutlinedTextField(
+            value = selectedOption ?: "",
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(label) },
+            modifier = Modifier.fillMaxWidth(),
+            trailingIcon = {
+                IconButton(onClick = { expanded = true }) {
+                    Icon(Icons.Default.ArrowDropDown, contentDescription = null)
+                }
+            }
+        )
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            options.forEach { option ->
+                DropdownMenuItem(
+                    text = { Text(option) },
+                    onClick = {
+                        onSelected(option)
                         expanded = false
                     }
                 )
