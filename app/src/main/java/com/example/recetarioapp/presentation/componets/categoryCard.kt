@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
 import coil3.compose.AsyncImage
 import com.example.recetarioapp.presentation.models.Categoria
-import com.example.recetarioapp.presentation.models.Category
+
 
 
 @Composable
