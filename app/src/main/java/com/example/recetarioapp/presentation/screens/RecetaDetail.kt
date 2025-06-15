@@ -72,21 +72,20 @@ fun RecetaDetail(
     val categorias by viewModel.categoriasFlow.collectAsState(initial = emptyList())
     val categoriaNombre = categorias.find { it._id == receta?.idcategory }?.category ?: "Sin categoría"
 
-
     LaunchedEffect(Unit) {
         viewModel.obtenerRecetas()
-
         viewModel.errorFlow.collect {
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
     }
 
-    Box(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(Color.White),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        item {
             val imageModel = receta?.image?.let {
                 if (it.startsWith("/")) File(it) else it
             } ?: ""
@@ -99,59 +98,38 @@ fun RecetaDetail(
                     .height(260.dp),
                 contentScale = ContentScale.Crop
             )
-
         }
 
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(460.dp)
-                .align(Alignment.BottomCenter)
-                .offset(y = (-50).dp),
-            shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
-            color = Color.White,
-            shadowElevation = 4.dp
-        ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+        item {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+                color = Color.White,
+                shadowElevation = 4.dp
             ) {
-                item {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(modifier = Modifier.weight(2f)) {
-                            Text(
-                                text = receta?.name ?: "",
-                                fontSize = 23.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black,
-                                textAlign = TextAlign.Start,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-
-                        }
-                    }
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp)
+                ) {
+                    Text(
+                        text = receta?.name ?: "",
+                        fontSize = 23.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Start
+                    )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    receta?.description?.let {
-                        Text(
-                            text = it,
-                            fontSize = 14.sp,
-                            color = Color.DarkGray,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 4.dp)
-                        )
-                    }
+                    Text(
+                        text = receta?.description ?: "",
+                        fontSize = 14.sp,
+                        color = Color.DarkGray
+                    )
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -160,79 +138,53 @@ fun RecetaDetail(
                         PillBox(icon = ClockHistory, value = receta?.time ?: "", label = "min")
                         PillBox(icon = PersonHearts, value = receta?.serving ?: "", label = "serving")
                         PillBox(icon = Fire, value = receta?.calories ?: "", label = "Cal")
-                        PillBox(icon = Layers, value = receta?.dificulty?:"", label = "Level")
+                        PillBox(icon = Layers, value = receta?.dificulty ?: "", label = "Level")
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 8.dp),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        Text(
-                            text = "Categoría: $categoriaNombre",
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = Color.Gray
-                        )
-                    }
-
+                    Text(
+                        text = "Categoría: $categoriaNombre",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Gray
+                    )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 8.dp, bottom = 10.dp, top = 10.dp),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        Text(
-                            text = "Ingredientes",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black
-                        )
-                    }
+                    Text(
+                        text = "Ingredientes",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
 
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
-                    ) {
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Column(modifier = Modifier.fillMaxWidth()) {
                         receta?.ingredients?.forEach { ingrediente ->
                             Row(
                                 verticalAlignment = Alignment.Top,
                                 modifier = Modifier.padding(bottom = 6.dp)
                             ) {
-                                Text("•", fontSize = 16.sp, color = Color.Black, modifier = Modifier.padding(end = 8.dp))
+                                Text("\u2022", fontSize = 16.sp, color = Color.Black, modifier = Modifier.padding(end = 8.dp))
                                 Text(ingrediente, fontSize = 15.sp, color = Color.Black)
                             }
                         }
                     }
 
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Text(
+                        text = "Pasos",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
+
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 8.dp, bottom = 10.dp),
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        Text(
-                            text = "Pasos",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black
-                        )
-                    }
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 8.dp)
-                    ) {
+                    Column(modifier = Modifier.fillMaxWidth()) {
                         receta?.pasos?.forEachIndexed { index, paso ->
                             Row(
                                 verticalAlignment = Alignment.Top,
@@ -254,7 +206,7 @@ fun RecetaDetail(
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(50.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
             }
         }

@@ -1,0 +1,192 @@
+Index: app/src/main/java/com/example/recetarioapp/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.recetarioapp\r\n\r\nimport android.os.Bundle\r\nimport androidx.activity.ComponentActivity\r\nimport androidx.activity.compose.setContent\r\nimport androidx.activity.enableEdgeToEdge\r\nimport androidx.compose.foundation.background\r\nimport androidx.compose.foundation.layout.fillMaxSize\r\nimport androidx.compose.foundation.layout.height\r\nimport androidx.compose.foundation.layout.padding\r\nimport androidx.compose.material.icons.Icons\r\nimport androidx.compose.material.icons.filled.Add\r\nimport androidx.compose.material3.*\r\nimport androidx.compose.runtime.*\r\nimport androidx.compose.ui.Modifier\r\nimport androidx.compose.ui.graphics.Color\r\nimport androidx.compose.ui.tooling.preview.Preview\r\nimport androidx.compose.ui.unit.dp\r\nimport androidx.navigation.compose.*\r\nimport com.example.recetarioapp.presentation.screens.AddRecetaScreen\r\nimport com.example.recetarioapp.presentation.screens.FavoritesScreens\r\nimport com.example.recetarioapp.presentation.screens.HomeScreen\r\nimport com.example.recetarioapp.presentation.screens.RecetaDetail\r\nimport com.example.recetarioapp.presentation.ui.theme.RecetarioAppTheme\r\nimport com.example.recetarioapp.presentation.utils.Bookmark\r\nimport com.example.recetarioapp.presentation.utils.Home\r\nimport dagger.hilt.android.AndroidEntryPoint\r\n\r\n\r\n\r\n@AndroidEntryPoint\r\nclass MainActivity : ComponentActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        enableEdgeToEdge()\r\n\r\n        setContent {\r\n            RecetarioAppTheme {\r\n                val navController = rememberNavController()\r\n                var selectedScreen by remember { mutableStateOf(\"home\") }\r\n\r\n                Scaffold(\r\n                    modifier = Modifier\r\n                        .fillMaxSize()\r\n                        .background(Color.White),\r\n                    bottomBar = {\r\n                        NavigationBar(\r\n                            containerColor = Color.White,\r\n                            modifier = Modifier.height(56.dp)\r\n                        ) {\r\n                            NavigationBarItem(\r\n                                selected = selectedScreen == \"home\",\r\n                                onClick = {\r\n                                    selectedScreen = \"home\"\r\n                                    navController.navigate(\"home\") {\r\n                                        popUpTo(0)\r\n                                    }\r\n                                },\r\n                                icon = {\r\n                                    Icon(\r\n                                        imageVector = Home,\r\n                                        contentDescription = \"Inicio\",\r\n                                        tint = if (selectedScreen == \"home\") Color.Black else Color.Gray\r\n                                    )\r\n                                },\r\n                                label = { Text(\"Inicio\") }\r\n                            )\r\n\r\n                            NavigationBarItem(\r\n                                selected = selectedScreen == \"add\",\r\n                                onClick = {\r\n                                    selectedScreen = \"add\"\r\n                                    navController.navigate(\"add\") {\r\n                                        popUpTo(0)\r\n                                    }\r\n                                },\r\n                                icon = {\r\n                                    Icon(\r\n                                        imageVector = Icons.Default.Add,\r\n                                        contentDescription = \"Agregar\",\r\n                                        tint = if (selectedScreen == \"add\") Color.Black else Color.Gray\r\n                                    )\r\n                                },\r\n                                label = { Text(\"Agregar\") }\r\n                            )\r\n\r\n                            NavigationBarItem(\r\n                                selected = selectedScreen == \"favorites\",\r\n                                onClick = {\r\n                                    selectedScreen = \"favorites\"\r\n                                    navController.navigate(\"favorites\") {\r\n                                        popUpTo(0)\r\n                                    }\r\n                                },\r\n                                icon = {\r\n                                    Icon(\r\n                                        imageVector = Bookmark,\r\n                                        contentDescription = \"Favoritos\",\r\n                                        tint = if (selectedScreen == \"favorites\") Color.Black else Color.Gray\r\n                                    )\r\n                                },\r\n                                label = { Text(\"Favoritos\") }\r\n                            )\r\n                        }\r\n                    }\r\n                ) { innerPadding ->\r\n                    NavHost(\r\n                        navController = navController,\r\n                        startDestination = \"home\",\r\n                        modifier = Modifier.padding(innerPadding)\r\n                    ) {\r\n                        composable(\"home\") {\r\n                            HomeScreen(innerPadding = innerPadding, navController = navController)\r\n                        }\r\n\r\n                        composable(\"add\") {\r\n                            AddRecetaScreen(innerPadding = innerPadding, navController = navController)\r\n                        }\r\n\r\n                        composable(\"favorites\") {\r\n\r\n                            Text(\"Pantalla Favoritos\", modifier = Modifier.padding(16.dp))\r\n\r\n                            FavoritesScreens(innerPadding = innerPadding, navController = navController)\r\n                        }\r\n\r\n                        composable(\"recetaDetail/{id}\") { backStackEntry ->\r\n                            val recetaId = backStackEntry.arguments?.getString(\"id\") ?: \"\"\r\n                            RecetaDetail(recetaId = recetaId, navController = navController)\r\n                        }\r\n\r\n                        }\r\n\r\n\r\n\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n\r\n\r\n\r\n@Preview(showBackground = true)\r\n@Composable\r\nfun GreetingPreview() {\r\n    RecetarioAppTheme {\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/recetarioapp/MainActivity.kt b/app/src/main/java/com/example/recetarioapp/MainActivity.kt
+--- a/app/src/main/java/com/example/recetarioapp/MainActivity.kt	(revision 736cb9d45a4c4dca58f98d0b3df67d578a53c345)
++++ b/app/src/main/java/com/example/recetarioapp/MainActivity.kt	(date 1749679621170)
+@@ -17,7 +17,6 @@
+ import androidx.compose.ui.tooling.preview.Preview
+ import androidx.compose.ui.unit.dp
+ import androidx.navigation.compose.*
+-import com.example.recetarioapp.presentation.screens.AddRecetaScreen
+ import com.example.recetarioapp.presentation.screens.FavoritesScreens
+ import com.example.recetarioapp.presentation.screens.HomeScreen
+ import com.example.recetarioapp.presentation.screens.RecetaDetail
+@@ -114,7 +113,7 @@
+                         }
+ 
+                         composable("add") {
+-                            AddRecetaScreen(innerPadding = innerPadding, navController = navController)
++
+                         }
+ 
+                         composable("favorites") {
+Index: app/src/main/java/com/example/recetarioapp/presentation/screens/AddRecetaScreen.kt
+===================================================================
+diff --git a/app/src/main/java/com/example/recetarioapp/presentation/screens/AddRecetaScreen.kt b/app/src/main/java/com/example/recetarioapp/presentation/screens/AddRecetaScreen.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/example/recetarioapp/presentation/screens/AddRecetaScreen.kt	(revision 736cb9d45a4c4dca58f98d0b3df67d578a53c345)
++++ /dev/null	(revision 736cb9d45a4c4dca58f98d0b3df67d578a53c345)
+@@ -1,158 +0,0 @@
+-package com.example.recetarioapp.presentation.screens
+-
+-
+-
+-import androidx.compose.foundation.background
+-import androidx.compose.foundation.layout.*
+-import androidx.compose.foundation.rememberScrollState
+-import androidx.compose.foundation.shape.RoundedCornerShape
+-import androidx.compose.foundation.verticalScroll
+-import androidx.compose.material3.*
+-import androidx.compose.runtime.*
+-import androidx.compose.ui.Alignment
+-import androidx.compose.ui.Modifier
+-import androidx.compose.ui.graphics.Color
+-import androidx.compose.ui.text.font.FontWeight
+-import androidx.compose.ui.text.input.TextFieldValue
+-import androidx.compose.ui.tooling.preview.Preview
+-import androidx.compose.ui.unit.dp
+-import androidx.navigation.NavHostController
+-import androidx.navigation.compose.rememberNavController
+-import com.example.recetarioapp.presentation.models.Receta
+-
+-@Composable
+-fun AddRecetaScreen(
+-    innerPadding: PaddingValues,
+-    navController: NavHostController
+-) {
+-    var name by remember { mutableStateOf("") }
+-    var description by remember { mutableStateOf("") }
+-    var image by remember { mutableStateOf("") }
+-    var calories by remember { mutableStateOf("") }
+-    var serving by remember { mutableStateOf("") }
+-    var time by remember { mutableStateOf("") }
+-    var category by remember { mutableStateOf("") }
+-    var ingredients by remember { mutableStateOf("") }
+-    var steps by remember { mutableStateOf("") }
+-
+-    val scrollState = rememberScrollState()
+-
+-    Column(
+-        modifier = Modifier
+-            .fillMaxSize()
+-            .padding(innerPadding)
+-            .background(Color(0xFFF5F5FA))
+-            .verticalScroll(scrollState) // ✅ Scroll activado
+-            .padding(16.dp)
+-    ) {
+-        Text(
+-            text = "Agregar Receta",
+-            style = MaterialTheme.typography.titleLarge,
+-            fontWeight = FontWeight.Bold,
+-            modifier = Modifier.align(Alignment.CenterHorizontally)
+-        )
+-
+-        Spacer(modifier = Modifier.height(16.dp))
+-
+-        // Bloques iguales a antes
+-        CardSection {
+-            OutlinedInput("Nombre", name) { name = it }
+-            OutlinedInput("Descripción", description) { description = it }
+-            OutlinedInput("URL de Imagen", image) { image = it }
+-        }
+-
+-        Spacer(modifier = Modifier.height(16.dp))
+-
+-        CardSection {
+-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+-                OutlinedInput("Calorías", calories, Modifier.weight(1f)) { calories = it }
+-                OutlinedInput("Porciones", serving, Modifier.weight(1f)) { serving = it }
+-            }
+-            Spacer(modifier = Modifier.height(8.dp))
+-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+-                OutlinedInput("Tiempo", time, Modifier.weight(1f)) { time = it }
+-                OutlinedInput("Categoría", category, Modifier.weight(1f)) { category = it }
+-            }
+-        }
+-
+-        Spacer(modifier = Modifier.height(16.dp))
+-
+-        CardSection {
+-            OutlinedInput("Ingredientes (coma)", ingredients) { ingredients = it }
+-            OutlinedInput("Pasos (coma)", steps) { steps = it }
+-        }
+-
+-        Spacer(modifier = Modifier.height(24.dp))
+-
+-        Button(
+-            onClick = {
+-                val receta = Receta(
+-                    _id = "",
+-                    __v = 0,
+-                    name = name,
+-                    description = description,
+-                    image = image,
+-                    calories = calories,
+-                    serving = serving,
+-                    time = time,
+-                    idcategory = category,
+-                    ingredients = ingredients.split(",").map { it.trim() },
+-                    pasos = steps.split(",").map { it.trim() }
+-                )
+-                println("Receta creada: $receta")
+-                navController.navigate("home") {
+-                    popUpTo("home") { inclusive = true }
+-                }
+-            },
+-            modifier = Modifier
+-                .fillMaxWidth()
+-                .height(56.dp),
+-            shape = RoundedCornerShape(16.dp),
+-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
+-        ) {
+-            Text("Guardar Receta", color = Color.White)
+-        }
+-
+-        Spacer(modifier = Modifier.height(32.dp)) // Para evitar que el botón quede pegado abajo
+-    }
+-}
+-
+-
+-@Composable
+-fun OutlinedInput(label: String, value: String, modifier: Modifier = Modifier, onValueChange: (String) -> Unit) {
+-    OutlinedTextField(
+-        value = value,
+-        onValueChange = onValueChange,
+-        label = { Text(label) },
+-        shape = RoundedCornerShape(12.dp),
+-        singleLine = true,
+-        modifier = modifier.fillMaxWidth()
+-    )
+-}
+-
+-@Composable
+-fun CardSection(content: @Composable ColumnScope.() -> Unit) {
+-    Card(
+-        shape = RoundedCornerShape(20.dp),
+-        modifier = Modifier.fillMaxWidth(),
+-        elevation = CardDefaults.cardElevation(4.dp)
+-    ) {
+-        Column(modifier = Modifier.padding(16.dp), content = content)
+-    }
+-}
+-
+-
+-
+-
+-
+-
+-
+-@Preview(showBackground = true)
+-@Composable
+-fun AddRecipeScreenPreview() {
+-    val fakeNavController = rememberNavController()
+-    AddRecetaScreen(
+-        innerPadding = PaddingValues(0.dp),
+-        navController = fakeNavController
+-    )
+-}

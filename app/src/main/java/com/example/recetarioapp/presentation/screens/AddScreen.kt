@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -20,7 +21,6 @@ import coil3.compose.rememberAsyncImagePainter
 import com.example.recetarioapp.presentation.models.Categoria
 import com.example.recetarioapp.presentation.models.Receta
 import com.example.recetarioapp.presentation.viewModels.RecetaViewModel
-
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -41,7 +41,7 @@ fun AddScreen(
     var time by remember { mutableStateOf("") }
     var calories by remember { mutableStateOf("") }
     var serving by remember { mutableStateOf("") }
-    var dificulty by remember { mutableStateOf("") } // <-- NUEVO
+    var dificulty by remember { mutableStateOf("") }
     var selectedCategoryId by remember { mutableStateOf<String?>(null) }
     var ingredientsText by remember { mutableStateOf("") }
     var pasosText by remember { mutableStateOf("") }
@@ -51,139 +51,131 @@ fun AddScreen(
         imageUri = it
     }
 
-    LazyColumn(
-        modifier = Modifier
-            .padding(innerPadding)
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        item { Text("Agregar nueva receta", style = MaterialTheme.typography.titleLarge) }
+    Surface(color = Color.White) {
 
-        item {
-            OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Nombre") }, modifier = Modifier.fillMaxWidth())
-        }
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            item { Text("Agregar nueva receta", style = MaterialTheme.typography.titleLarge) }
 
-        item {
-            OutlinedTextField(value = description, onValueChange = { description = it }, label = { Text("Descripción") }, modifier = Modifier.fillMaxWidth())
-        }
+            item { OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Nombre") }, modifier = Modifier.fillMaxWidth()) }
 
-        item {
-            OutlinedTextField(value = time, onValueChange = { time = it }, label = { Text("Tiempo (min)") }, modifier = Modifier.fillMaxWidth())
-        }
+            item { OutlinedTextField(value = description, onValueChange = { description = it }, label = { Text("Descripción") }, modifier = Modifier.fillMaxWidth()) }
 
-        item {
-            OutlinedTextField(value = calories, onValueChange = { calories = it }, label = { Text("Calorías") }, modifier = Modifier.fillMaxWidth())
-        }
+            item { OutlinedTextField(value = time, onValueChange = { time = it }, label = { Text("Tiempo (min)") }, modifier = Modifier.fillMaxWidth()) }
 
-        item {
-            OutlinedTextField(value = serving, onValueChange = { serving = it }, label = { Text("Porciones") }, modifier = Modifier.fillMaxWidth())
-        }
+            item { OutlinedTextField(value = calories, onValueChange = { calories = it }, label = { Text("Calorías") }, modifier = Modifier.fillMaxWidth()) }
 
-        item {
-            DropdownMenuSimple(
-                options = dificultades,
-                selectedOption = dificulty,
-                label = "Dificultad",
-                onSelected = { dificulty = it }
-            )
-        }
+            item { OutlinedTextField(value = serving, onValueChange = { serving = it }, label = { Text("Porciones") }, modifier = Modifier.fillMaxWidth()) }
 
-
-        item {
-            Button(onClick = { launcher.launch("image/*") }) {
-                Text("Seleccionar imagen")
-            }
-        }
-
-        item {
-            imageUri?.let { uri ->
-                Image(
-                    painter = rememberAsyncImagePainter(model = uri),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
+            item {
+                DropdownMenuSimple(
+                    options = dificultades,
+                    selectedOption = dificulty,
+                    label = "Dificultad",
+                    onSelected = { dificulty = it }
                 )
             }
-        }
 
-        item {
-            OutlinedTextField(
-                value = ingredientsText,
-                onValueChange = { ingredientsText = it },
-                label = { Text("Ingredientes (separados por coma)") },
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
+            item {
+                Button(onClick = { launcher.launch("image/*") }) {
+                    Text("Seleccionar imagen")
+                }
+            }
 
-        item {
-            OutlinedTextField(
-                value = pasosText,
-                onValueChange = { pasosText = it },
-                label = { Text("Pasos (separados por coma)") },
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
+            item {
+                imageUri?.let { uri ->
+                    Image(
+                        painter = rememberAsyncImagePainter(model = uri),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp)
+                    )
+                }
+            }
 
-        item {
-            DropdownMenuCategory(
-                categorias = categorias,
-                selectedId = selectedCategoryId,
-                onSelected = { selectedCategoryId = it }
-            )
-        }
+            item {
+                OutlinedTextField(
+                    value = ingredientsText,
+                    onValueChange = { ingredientsText = it },
+                    label = { Text("Ingredientes (separados por coma)") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
 
-        item {
-            Button(
-                onClick = {
-                    if (name.isNotBlank() && selectedCategoryId != null) {
-                        // Guardar imagen localmente
-                        val savedImagePath = imageUri?.let { uri ->
-                            try {
-                                val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
-                                val file = File(context.filesDir, "imagen_${System.currentTimeMillis()}.jpg")
-                                val outputStream = FileOutputStream(file)
-                                inputStream?.copyTo(outputStream)
-                                outputStream.close()
-                                inputStream?.close()
-                                file.absolutePath // ruta local
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                                null
-                            }
-                        } ?: ""
+            item {
+                OutlinedTextField(
+                    value = pasosText,
+                    onValueChange = { pasosText = it },
+                    label = { Text("Pasos (separados por coma)") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
 
-                        val receta = Receta(
-                            _id = "",
-                            __v = 0,
-                            name = name,
-                            description = description,
-                            time = time,
-                            calories = calories,
-                            serving = serving,
-                            dificulty = dificulty ?: "",
-                            image = savedImagePath,
-                            idcategory = selectedCategoryId!!,
-                            ingredients = ingredientsText.split(",").map { it.trim() },
-                            pasos = pasosText.split(",").map { it.trim() },
-                            favorite = false
-                        )
+            item {
+                DropdownMenuCategory(
+                    categorias = categorias,
+                    selectedId = selectedCategoryId,
+                    onSelected = { selectedCategoryId = it }
+                )
+            }
 
-                        viewModel.agregarReceta(receta)
-                        viewModel.obtenerRecetas()
-                        navController.navigateUp()
-                        Toast.makeText(context, "Receta guardada", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(context, "Faltan campos obligatorios", Toast.LENGTH_SHORT).show()
-                    }
-                },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text("Guardar receta")
+            item {
+                Button(
+                    onClick = {
+                        if (name.isNotBlank() && selectedCategoryId != null) {
+                            val savedImagePath = imageUri?.let { uri ->
+                                try {
+                                    val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+                                    val file = File(context.filesDir, "imagen_${System.currentTimeMillis()}.jpg")
+                                    val outputStream = FileOutputStream(file)
+                                    inputStream?.copyTo(outputStream)
+                                    outputStream.close()
+                                    inputStream?.close()
+                                    file.absolutePath
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    null
+                                }
+                            } ?: ""
+
+                            val receta = Receta(
+                                _id = "",
+                                __v = 0,
+                                name = name,
+                                description = description,
+                                time = time,
+                                calories = calories,
+                                serving = serving,
+                                dificulty = dificulty ?: "",
+                                image = savedImagePath,
+                                idcategory = selectedCategoryId!!,
+                                ingredients = ingredientsText.split(",").map { it.trim() },
+                                pasos = pasosText.split(",").map { it.trim() },
+                                favorite = false
+                            )
+
+                            viewModel.agregarReceta(receta)
+                            viewModel.obtenerRecetas()
+                            navController.navigateUp()
+                            Toast.makeText(context, "Receta guardada", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Faltan campos obligatorios", Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Guardar receta")
+                }
             }
         }
     }
 }
+
 
 @Composable
 fun DropdownMenuCategory(
