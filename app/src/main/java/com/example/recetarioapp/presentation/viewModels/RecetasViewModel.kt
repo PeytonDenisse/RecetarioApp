@@ -99,6 +99,34 @@ class RecetaViewModel @Inject constructor(
     }
 
 
+    fun calcularPromedioCaloriasPorCategoria(
+        recetas: List<Receta>,
+        categorias: List<Categoria>
+    ): Map<String, Double> {
+        val recetasValidas = recetas.mapNotNull { receta ->
+            val calorias = receta.calories.toIntOrNull()
+            if (calorias != null) receta.copy(calories = calorias.toString()) else null
+        }
+
+        return categorias.associate { categoria ->
+            val recetasCategoria = recetasValidas.filter { it.idcategory == categoria._id }
+            val promedio = recetasCategoria.mapNotNull { it.calories.toIntOrNull() }.average()
+            categoria.category to promedio
+        }
+    }
+
+
+    fun calcularModaDificultad(recetas: List<Receta>): String {
+        return recetas.map { it.dificulty }
+            .groupingBy { it }
+            .eachCount()
+            .maxByOrNull { it.value }
+            ?.key ?: "Sin datos"
+    }
+
+
+
+
 }
 
 
