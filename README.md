@@ -95,7 +95,7 @@ fun calcularModaDificultadPorCategoria(recetas, categorias): Map<String, String>
 ---
 
 Equipo: 
-Denisse Chagoya Veloz 
-Greys Alexa Almanza Vega 
-Sarai Alexandra Martines
+Denisse Chagoya Veloz |
+Greys Alexa Almanza Vega |
+Sarai Alexandra Martines |
 ✨
