@@ -52,24 +52,90 @@ fun AddScreen(
     }
 
     Surface(color = Color.White) {
-
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(innerPadding)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            item { Text("Agregar nueva receta", style = MaterialTheme.typography.titleLarge) }
+            item {
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Nombre", color = Color.Gray) },
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black),
+                    modifier = Modifier.fillMaxWidth(),
 
-            item { OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Nombre") }, modifier = Modifier.fillMaxWidth()) }
+                )
+            }
 
-            item { OutlinedTextField(value = description, onValueChange = { description = it }, label = { Text("Descripción") }, modifier = Modifier.fillMaxWidth()) }
+            item {
+                OutlinedTextField(
+                    value = description,
+                    onValueChange = { description = it },
+                    label = { Text("Descripción", color = Color.Gray) },
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black),
+                    modifier = Modifier.fillMaxWidth(),
 
-            item { OutlinedTextField(value = time, onValueChange = { time = it }, label = { Text("Tiempo (min)") }, modifier = Modifier.fillMaxWidth()) }
+                )
+            }
 
-            item { OutlinedTextField(value = calories, onValueChange = { calories = it }, label = { Text("Calorías") }, modifier = Modifier.fillMaxWidth()) }
+            item {
+                OutlinedTextField(
+                    value = time,
+                    onValueChange = { time = it },
+                    label = { Text("Tiempo (min)", color = Color.Gray) },
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black),
+                    modifier = Modifier.fillMaxWidth(),
 
-            item { OutlinedTextField(value = serving, onValueChange = { serving = it }, label = { Text("Porciones") }, modifier = Modifier.fillMaxWidth()) }
+                )
+            }
+
+            item {
+                OutlinedTextField(
+                    value = calories,
+                    onValueChange = { calories = it },
+                    label = { Text("Calorías", color = Color.Gray) },
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black),
+                    modifier = Modifier.fillMaxWidth(),
+
+                )
+            }
+
+            item {
+                OutlinedTextField(
+                    value = serving,
+                    onValueChange = { serving = it },
+                    label = { Text("Porciones", color = Color.Gray) },
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black),
+                    modifier = Modifier.fillMaxWidth(),
+
+                )
+            }
+
+            item {
+                OutlinedTextField(
+                    value = ingredientsText,
+                    onValueChange = { ingredientsText = it },
+                    label = { Text("Ingredientes (separados por coma)", color = Color.Gray) },
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black),
+                    modifier = Modifier.fillMaxWidth(),
+
+                )
+            }
+
+            item {
+                OutlinedTextField(
+                    value = pasosText,
+                    onValueChange = { pasosText = it },
+                    label = { Text("Pasos (separados por coma)", color = Color.Gray) },
+                    textStyle = LocalTextStyle.current.copy(color = Color.Black),
+                    modifier = Modifier.fillMaxWidth(),
+
+                )
+            }
+
 
             item {
                 DropdownMenuSimple(
@@ -98,23 +164,7 @@ fun AddScreen(
                 }
             }
 
-            item {
-                OutlinedTextField(
-                    value = ingredientsText,
-                    onValueChange = { ingredientsText = it },
-                    label = { Text("Ingredientes (separados por coma)") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
 
-            item {
-                OutlinedTextField(
-                    value = pasosText,
-                    onValueChange = { pasosText = it },
-                    label = { Text("Pasos (separados por coma)") },
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
 
             item {
                 DropdownMenuCategory(
