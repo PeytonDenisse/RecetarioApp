@@ -126,6 +126,19 @@
                         color = Color.DarkGray,
                         modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
                     )
+                    val promedioCalorias = if (selectedCategoryId != null) {
+                        viewModel.calcularPromedioCaloriasPorCategoria(recetas, categorias)[tituloCategoria]
+                    } else null
+
+                    promedioCalorias?.let {
+                        Text(
+                            text = "Promedio de calorías: ${it.toInt()} kcal",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color.Gray,
+                            modifier = Modifier.padding(bottom = 8.dp)
+                        )
+                    }
+
 
                     val recetasFiltradas = if (selectedCategoryId != null) {
                         recetas.filter { it.idcategory == selectedCategoryId }
