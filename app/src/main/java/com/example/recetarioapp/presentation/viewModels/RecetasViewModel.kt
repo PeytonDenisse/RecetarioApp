@@ -116,6 +116,16 @@ class RecetaViewModel @Inject constructor(
     }
 
 
+    fun calcularModaDificultad(recetas: List<Receta>): String {
+        return recetas.map { it.dificulty }
+            .groupingBy { it }
+            .eachCount()
+            .maxByOrNull { it.value }
+            ?.key ?: "Sin datos"
+    }
+
+
+
 
 }
 
